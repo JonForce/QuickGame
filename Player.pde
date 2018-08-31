@@ -43,7 +43,7 @@ class Player {
   }
 
   void updateControls() {
-    float speedMultiplier = controller.leftTrigger.getValue() > .2f? RUNNING_MULTIPLIER : 1;
+    float speedMultiplier = controller.leftTrigger.getValue() > .2f? RUNNING_MULTIPLIER : 1; //<>//
     if (!collidingDown())
       speedMultiplier = AIR_CONTROL;
     speedX += speed * controller.sliderA.getValue() * speedMultiplier;
@@ -73,7 +73,7 @@ class Player {
   void drawPlayer() {
     // Rendering
     fill(255, 255, 255);
-    rect(width / 2, y, size, size);
+    rect(x - camera.x + width/2, y - camera.y, size, size);
   }
 
   boolean isDead() {
@@ -83,7 +83,7 @@ class Player {
   boolean collidingUp() {
     boolean flag = false;
     for (Block b : blocks)
-      if (b.collidingUp)
+      if (b.collidingUp.contains(this))
         flag = true;
     return flag;
   }
@@ -91,7 +91,7 @@ class Player {
   boolean collidingDown() {
     boolean flag = false;
     for (Block b : blocks)
-      if (b.collidingDown)
+      if (b.collidingDown.contains(this))
         flag = true;
     return flag;
   }
@@ -99,7 +99,7 @@ class Player {
   boolean collidingRight() {
     boolean flag = false;
     for (Block b : blocks)
-      if (b.collidingRight)
+      if (b.collidingRight.contains(this))
         flag = true;
     return flag;
   }
@@ -107,7 +107,7 @@ class Player {
   boolean collidingLeft() {
     boolean flag = false;
     for (Block b : blocks)
-      if (b.collidingLeft)
+      if (b.collidingLeft.contains(this))
         flag = true;
     return flag;
   }

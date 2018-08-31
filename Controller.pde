@@ -7,11 +7,14 @@ class Controller {
   ControlSlider leftTrigger;
   ControlButton buttonA;
 
-  Controller(QuickGame game) {
+  Controller(QuickGame game, String controllerName) {
     // Initialise the ControlIO
     control = ControlIO.getInstance(game);
     // Find a device that matches the configuration file
-    gpad = control.getMatchedDevice("gamepad");
+    gpad = control.getDevice(controllerName);
+    gpad.matches(Configuration.makeConfiguration(game, "gamepad"));
+
+
 
     if (gpad == null) {
       println("Gamepad null");

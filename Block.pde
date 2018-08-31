@@ -1,58 +1,62 @@
 class Block {
   float x, y, w, h;
-  Player player;
-  boolean
-    collidingUp, collidingDown, collidingRight, collidingLeft;
+  ArrayList<Player>
+    collidingUp = new ArrayList<Player>(), 
+    collidingDown = new ArrayList<Player>(), 
+    collidingRight = new ArrayList<Player>(), 
+    collidingLeft = new ArrayList<Player>();
 
-  Block(Player p, float x, float y, float w, float h) {
-    this.player = p;
+  Block(float x, float y, float w, float h) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
   }
 
-  void updatePhysics() {
+  void updatePhysics(Player ... players) {
     Rectangle self = new Rectangle(x, y, w, h);
-    Rectangle players = new Rectangle(player.x, player.y, player.size, player.size);
 
-    Rectangle intercept = self.intercept(players);
+    for (Player player : players) {
+      Rectangle playerRect = new Rectangle(player.x, player.y, player.size, player.size);
 
-    if (intercept.w == 0 && intercept.y == 0) {
-      collidingDown = false;
-      collidingUp = false;
-      collidingLeft = false;
-      collidingRight = false;
-    } else {
-      if (intercept.h <= intercept.w) {
-        if (player.y < y + h/2) {
-          collidingDown = true;
-          player.y -= intercept.h;
-        } else if (player.y > y + h/2) {
-          collidingUp = true;
-          player.y += intercept.h;
-        }
-        collidingLeft = false;
-        collidingRight = false;
+      Rectangle intercept = self.intercept(playerRect);
 
-        player.speedY = 0;
+      if (intercept.w == 0 && intercept.y == 0) {
+        collidingDown.remove(player);
+        collidingUp.remove(player);
+        collidingLeft.remove(player);
+        collidingRight.remove(player);
       } else {
-        if (player.x < x + w/2) {
-          player.x -= intercept.w;
-          collidingRight = true;
-        } else if (player.x > x + w/2) {
-          player.x += intercept.w;
-          collidingLeft = true;
+        if (intercept.h <= intercept.w) {
+          if (player.y < y + h/2) {
+            collidingDown.add(player);
+            player.y -= intercept.h;
+          } else if (player.y > y + h/2) {
+            collidingUp.add(player);
+            player.y += intercept.h;
+          }
+          collidingLeft.remove(player);
+          collidingRight.remove(player);
+
+          player.speedY = 0;
+        } else {
+          if (player.x < x + w/2) {
+            player.x -= intercept.w;
+            collidingRight.add(player);
+          } else if (player.x > x + w/2) {
+            player.x += intercept.w;
+            collidingLeft.add(player);
+          }
+          collidingDown.remove(player);
+          collidingUp.remove(player);
         }
-        collidingDown = false;
-        collidingUp = false;
       }
     }
   }
 
   void render() {
     fill(0, 0, 0);
-    rect(x - player.x + width/2, y, w, h);
+    rect(x - camera.x + width/2, y - camera.y, w, h);
   }
 }
 
@@ -117,9 +121,9 @@ class Rectangle {
     return intercept;
   }
 
-  void render(Player p) {
+  void render() {
     fill(255, 0, 0);
-    rect(x - p.x + width/2, p.y, w, h);
+    rect(x - camera.x + width/2, y - camera.y, w, h);
     println(x + ", " + y + ", " + w + ", " + h);
   }
 }

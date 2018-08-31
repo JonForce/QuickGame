@@ -4,7 +4,6 @@ import java.util.*;
 class Background {
   final int BG_DUST_AMOUNT = 150;
 
-  private Player player;
   private Speck[] specks;
   ArrayList<Tree> trees = new ArrayList<Tree>();
   
@@ -16,8 +15,7 @@ class Background {
   };
   ArrayList<Renderable> objectsToRender = new ArrayList<Renderable>();
 
-  Background(Player p) {
-    player = p;
+  Background() {
     specks = new Speck[BG_DUST_AMOUNT];
     for (int i = 0; i < BG_DUST_AMOUNT; i ++) {
       specks[i] = new Speck(random(width), random(height - 30), random(1, 10));
@@ -26,7 +24,7 @@ class Background {
     }
 
     for (int i = 0; i < 20; i ++) {
-      Tree t = new Tree(player, i * random(100, 300), (1.0/20) * i);
+      Tree t = new Tree(i * random(100, 300), (1.0/20) * i);
       trees.add(t);
       objectsToRender.add(t);
     }
@@ -56,8 +54,8 @@ class Speck implements Renderable {
     // Render the dust particle. The x position is looped around the left side of the screen.
     // Depth is multiplied against the player's x position to produce a parralax affect.
     ellipse(
-      width - (x + player.x * depth) % width, 
-      y, 
+      width - (x + camera.x * depth) % width, 
+      (height - (y + camera.y))%height, 
       size, size);
   }
   @Override

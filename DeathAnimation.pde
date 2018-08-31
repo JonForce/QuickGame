@@ -20,7 +20,7 @@ class DeathAnimation {
 
   void render() {
     for (int i = 0; i < CHUNKS; i ++)
-      chunks[i].render(player);
+      chunks[i].render();
   }
 }
 
@@ -44,7 +44,7 @@ class Chunk {
     this.blood = blood;
   }
 
-  void render(Player player) {
+  void render() {
     // Physics
     x += speedX;
     y += speedY;
@@ -57,10 +57,10 @@ class Chunk {
     // Rendering
     if (blood) {
       fill(255, 0, 0);
-      rect(x - player.x + width/2, y, BLOOD_SIZE, BLOOD_SIZE);
+      rect(x - camera.x + width/2, y - camera.y, BLOOD_SIZE, BLOOD_SIZE);
     } else {
       fill(255, 255, 255);
-      rect(x - player.x + width/2, y, CHUNK_SIZE, CHUNK_SIZE);
+      rect(x - camera.x + width/2, y - camera.y, CHUNK_SIZE, CHUNK_SIZE);
     }
   }
 }

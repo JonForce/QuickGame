@@ -1,5 +1,4 @@
 class Tree implements Renderable { //<>// //<>//
-  Player player;
   float x, depth;
 
   ArrayList<Vector> vectors = new ArrayList<Vector>();
@@ -9,8 +8,7 @@ class Tree implements Renderable { //<>// //<>//
   PGraphics graphic;
   PImage image;
 
-  Tree(Player player, float x, float depth) {
-    this.player = player;
+  Tree(float x, float depth) {
     this.x = x;
     this.depth = depth;
     graphic = createGraphics(800, 800);
@@ -28,8 +26,8 @@ class Tree implements Renderable { //<>// //<>//
   }
 
   void render() {
-    float drawX = width - (player.x * depth + x) % (width + 800);
-    image(graphic, drawX, height-30-800);
+    float drawX = width - (camera.x * depth + x) % (width + 800);
+    image(graphic, drawX, height-30-800 - camera.y);
   }
   @Override
   float depth() { 
