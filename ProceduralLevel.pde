@@ -5,20 +5,22 @@ class ProceduralLevel {
     BUFFER = 400;
 
   ArrayList<Spawner> spawners = new ArrayList<Spawner>();
-
-  ProceduralLevel(QuickGame game) {
-    spawners.add(new SawHallway(game));
-    spawners.add(new SawRow(game));
-    spawners.add(new SawPit(game));
-    spawners.add(new SawClimb(game));
+  LevelState level;
+  
+  ProceduralLevel(LevelState level) {
+    this.level = level;
+    spawners.add(new SawHallway(level));
+    spawners.add(new SawRow(level));
+    spawners.add(new SawPit(level));
+    spawners.add(new SawClimb(level));
   }
 
   void generate() {
     ArrayList<Rect> spawnPoints = new ArrayList<Rect>();
     // Build the ground.
-    blocks.add(new Block(0, height - 30, LENGTH, 31));
+    level.blocks.add(new Block(0, height - 30, LENGTH, 31));
 
-    float x = playerA.x + BUFFER*2;
+    float x = level.playerA.x + BUFFER*2;
 
     while (x < LENGTH) {
       Spawner s = spawners.get((int)random(0, spawners.size()));
@@ -33,7 +35,6 @@ class ProceduralLevel {
     }
 
     while (spawnPoints.size() > 0) {
-      print(spawnPoints.size());
       Rect point = spawnPoints.get(0);
       Spawner s = getSpawnerForSize(point);
       if (s == null) {
@@ -73,24 +74,25 @@ abstract class Spawner {
 }
 
 class SawHallway extends Spawner {
-  SawHallway(QuickGame game) { 
-    this.game = game;
+  LevelState level;
+  SawHallway(LevelState level) { 
+    this.level = level;
     canStack = true;
     minWidth = 300;
   }
 
   @Override
-    void generate(float baseX, float baseY, float maxWidth) {
+  void generate(float baseX, float baseY, float maxWidth) {
     int sawSeperation = (int)random(200, 350), saws = (int)random(1, (int) (maxWidth / sawSeperation));
     h = 200;
     w = saws * sawSeperation;
-    game.blocks.add(new Block(baseX, baseY - h, w, 40));
-    game.blocks.add(new Block(baseX - 40, baseY - h - 40, w + 80, 40));
+    level.blocks.add(new Block(baseX, baseY - h, w, 40));
+    level.blocks.add(new Block(baseX - 40, baseY - h - 40, w + 80, 40));
     for (int i = 0; i <= saws; i++) {
       if (i % 2 == 0) {
-        game.traps.add(new SawTrap(baseX + width/2 + i*sawSeperation, baseY - h + 40));
+        level.traps.add(new SawTrap(baseX + width/2 + i*sawSeperation, baseY - h + 40));
       } else {
-        game.traps.add(new SawTrap(baseX + width/2 + i*sawSeperation, baseY - 30));
+        level.traps.add(new SawTrap(baseX + width/2 + i*sawSeperation, baseY - 30));
       }
     }
     //h += 40;
@@ -98,21 +100,22 @@ class SawHallway extends Spawner {
 }
 
 class SawRow extends Spawner {
-  SawRow(QuickGame game) { 
-    this.game = game;
+  LevelState level;
+  SawRow(LevelState level) {
+    this.level = level;
     canStack = false;
     minWidth = SawTrap.SPIKE_WIDTH*2;
   }
 
   @Override
-    void generate(float baseX, float baseY, float maxWidth) {
+  void generate(float baseX, float baseY, float maxWidth) {
     h = 300;
     w = random(SawTrap.SPIKE_WIDTH, min(600, maxWidth));
 
     int toSpawn = (int) (w/SawTrap.SPIKE_WIDTH), spawned = 0;
     float x = baseX + w/2;
     while (spawned < toSpawn) {
-      game.traps.add(new SawTrap(x + width/2, baseY - SawTrap.SPIKE_HEIGHT/2));
+      level.traps.add(new SawTrap(x + width/2, baseY - SawTrap.SPIKE_HEIGHT/2));
       spawned ++;
       x += SawTrap.SPIKE_WIDTH;
     }
@@ -120,8 +123,9 @@ class SawRow extends Spawner {
 }
 
 class SawPit extends Spawner {
-  SawPit(QuickGame game) { 
-    this.game = game;
+  LevelState level;
+  SawPit(LevelState level) { 
+    this.level = level;
     canStack = false;
     minWidth = 1400;
   }
@@ -132,16 +136,16 @@ class SawPit extends Spawner {
     w = min(random(1000, 1500), maxWidth);
 
     // Starting block.
-    game.blocks.add(new Block(baseX, baseY - 250, w / 4, 250));
+    level.blocks.add(new Block(baseX, baseY - 250, w / 4, 250));
     // Ending block
-    game.blocks.add(new Block(baseX + w - w/4, baseY - 100, w / 4, 100));
+    level.blocks.add(new Block(baseX + w - w/4, baseY - 100, w / 4, 100));
 
     // Spawn the saws in the pit.
     float sawsLength = w - w/4;
     int toSpawn = (int) (sawsLength/SawTrap.SPIKE_WIDTH), spawned = 0;
     float x = baseX + 250;
     while (spawned < toSpawn) {
-      game.traps.add(new SawTrap(x + width/2, baseY - SawTrap.SPIKE_HEIGHT/2));
+      level.traps.add(new SawTrap(x + width/2, baseY - SawTrap.SPIKE_HEIGHT/2));
       spawned ++;
       x += SawTrap.SPIKE_WIDTH;
     }
@@ -149,8 +153,9 @@ class SawPit extends Spawner {
 }
 
 class SawClimb extends Spawner {
-  SawClimb(QuickGame game) { 
-    this.game = game;
+  LevelState level;
+  SawClimb(LevelState level) {
+    this.level = level;
     canStack = false;
     minWidth = 700;
   }
@@ -162,16 +167,16 @@ class SawClimb extends Spawner {
     float floorHeight = 200, wallThickness = 60;
 
     // Vertical walls
-    blocks.add(new Block(baseX, baseY - h + 100, wallThickness, h - 250));
-    blocks.add(new Block(baseX + w - wallThickness, baseY - h, wallThickness, h));
+    level.blocks.add(new Block(baseX, baseY - h + 100, wallThickness, h - 250));
+    level.blocks.add(new Block(baseX + w - wallThickness, baseY - h, wallThickness, h));
 
     // Platforms
     for (int i = 0; i < h / floorHeight; i ++) {
-      blocks.add(new Block(baseX + 150*(i % 2 == 0? 1 : 0), baseY - floorHeight*i, w - 175, wallThickness));
+      level.blocks.add(new Block(baseX + 150*(i % 2 == 0? 1 : 0), baseY - floorHeight*i, w - 175, wallThickness));
       if (random(0, 100) < 70)
-        traps.add(new SawTrap(baseX + width/2 + 100*(i % 2 == 0? 1 : 0) + w/2 + 50, baseY - floorHeight*i));
+        level.traps.add(new SawTrap(baseX + width/2 + 100*(i % 2 == 0? 1 : 0) + w/2 + 50, baseY - floorHeight*i - 8));
       if (random(0, 100) < 70)
-        traps.add(new SawTrap(baseX + width/2 + 100*(i % 2 == 0? 1 : 0) + w/2 - 150, baseY - floorHeight*i - floorHeight + wallThickness));
+        level.traps.add(new SawTrap(baseX + width/2 + 100*(i % 2 == 0? 1 : 0) + w/2 - 150, baseY - floorHeight*i - floorHeight + wallThickness));
     }
   }
 }

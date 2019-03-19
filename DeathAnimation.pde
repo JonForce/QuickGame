@@ -18,9 +18,9 @@ class DeathAnimation {
     }
   }
 
-  void render() {
+  void render(Camera camera) {
     for (int i = 0; i < CHUNKS; i ++)
-      chunks[i].render();
+      chunks[i].render(camera);
   }
 }
 
@@ -44,7 +44,7 @@ class Chunk {
     this.blood = blood;
   }
 
-  void render() {
+  void render(Camera camera) {
     // Physics
     x += speedX;
     y += speedY;

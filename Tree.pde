@@ -1,4 +1,4 @@
-class Tree implements Renderable { //<>// //<>//
+class Tree implements Renderable { //<>//
   float x, depth;
 
   ArrayList<Vector> vectors = new ArrayList<Vector>();
@@ -25,7 +25,7 @@ class Tree implements Renderable { //<>// //<>//
     graphic.endDraw();
   }
 
-  void render() {
+  void render(Camera camera) {
     float drawX = width - (camera.x * depth + x) % (width + 800);
     image(graphic, drawX, height-30-800 - camera.y);
   }

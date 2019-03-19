@@ -18,7 +18,7 @@ class SawTrap {
       speeds[i] = random(1) < .5? random(-5, -8) : random(5, 8);
   }
 
-  void render(Player ... players) {
+  void render(Camera camera, Player ... players) {
     fill(0, 0, 0);
     float x = startPoint.x;
     float y = startPoint.y;

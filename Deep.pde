@@ -1,4 +1,4 @@
 interface Renderable {
-  void render();
+  void render(Camera camera);
   float depth();
 }
