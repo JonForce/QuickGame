@@ -12,9 +12,11 @@ class Player {
     // The amount to set the vertical velocity to when jumping.
     JUMP_VELOCITY = 15, 
     AIR_CONTROL = .2f, 
-    RUNNING_MULTIPLIER = 1.75f;
+    RUNNING_MULTIPLIER = 1.75f, 
+    START_X, 
+    START_Y;
   final long
-    MIN_TIME_BETWEEN_WALLJUMPS = 750,
+    MIN_TIME_BETWEEN_WALLJUMPS = 750, 
     FELL_OFF_WALL_STILL_WALL_JUMP_TIME = 100;
 
   float
@@ -30,13 +32,16 @@ class Player {
     this.level = level;
     y = height - 30 - size;
     x = width;
+    START_X = x;
+    START_Y = y;
+
     this.controller = controller;
     gun = new Pistol(this, controllerA);
   }
-  
+
   void update() {
-      updateControls();
-      updatePhysics();
+    updateControls();
+    updatePhysics();
   }
 
   void render(Camera camera) {
@@ -54,19 +59,22 @@ class Player {
   }
 
   void updateControls() {
+    gun.update();
+
     float speedMultiplier = controller.leftTrigger.getValue() > .2f? RUNNING_MULTIPLIER : 1;
     if (!collidingDown())
       speedMultiplier = AIR_CONTROL;
-    speedX += speed * controller.sliderA.getValue() * speedMultiplier;
+    speedX += speed * controller.sliderAX.getValue() * speedMultiplier;
 
     boolean wallJump =
       (millis() - lastWallTouchTime < FELL_OFF_WALL_STILL_WALL_JUMP_TIME)
       && millis() - lastWallJump > MIN_TIME_BETWEEN_WALLJUMPS;
-    if (
-      controller.buttonA.pressed() &&
-      (collidingDown() || wallJump)) {
+
+    if (controller.buttonA.pressed() && (collidingDown() || wallJump)) {
       speedY = -JUMP_VELOCITY;
-      if (wallJump) lastWallJump = millis();
+      if (wallJump) {
+        lastWallJump = millis();
+      }
     }
 
     if (collidingDown())

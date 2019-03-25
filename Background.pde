@@ -24,8 +24,8 @@ class Background {
     // First create all of the specks and add them to their array.
     specks = new Speck[BG_DUST_AMOUNT];
     for (int i = 0; i < BG_DUST_AMOUNT; i ++) {
-      specks[i] = new Speck(random(width), random(height - 30), random(1, 10));
-      specks[i].depth = (specks[i].size / 10);
+      specks[i] = new Speck(random(width), random(height - 30), random(1, 6));
+      specks[i].depth = (specks[i].size / 6.0);
       objectsToRender.add(specks[i]);
     }
     
@@ -41,6 +41,15 @@ class Background {
     
     // Sort all of the items in the BG by their depth.
     Collections.sort(objectsToRender, depthComparator);
+  }
+  
+  void update() {
+    for (Renderable ren : objectsToRender) {
+      if (ren instanceof Stars)
+        ((Stars) ren).update();
+      else if (ren instanceof Speck)
+        ((Speck) ren).x += ((Speck) ren).depth;
+    }
   }
 
   void render(Camera camera) {
@@ -63,6 +72,7 @@ class Speck implements Renderable {
   }
 
   void render(Camera camera) {
+    fill(0);
     // Render the dust particle. The x position is looped around the left side of the screen.
     // Depth is multiplied against the player's x position to produce a parralax affect.
     ellipse(
@@ -95,6 +105,12 @@ class Stars implements Renderable {
       stars.add(s);
     }
   }
+  
+  void update() {
+     for (Star s : stars) {
+       s.x = (s.x + s.depth);
+     }
+  }
 
   void render(Camera camera) {
     // For every star in the list,
@@ -113,7 +129,7 @@ class Stars implements Renderable {
       fill(255);
       ellipse(s.x, s.y, 3, 3);
       stroke(0);
-      s.x = (s.x + s.depth);
+      
       // Loop back to the left once the star has moved off the right of the screen.
       if (s.x > width + CONNECT_DIST)
         s.x = -CONNECT_DIST;

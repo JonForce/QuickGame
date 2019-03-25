@@ -1,4 +1,5 @@
-static final boolean SINGLE_PLAYER = true;
+static final boolean
+   SINGLE_PLAYER = true;
 
 /** This is a running list of the keys that are currently pressed represented by their Character. */
 static ArrayList<Character> keysPressed = new ArrayList<Character>();
@@ -8,14 +9,15 @@ GameState state;
 Controller controllerA, controllerB;
 
 void setup() {
-  //size(800, 600, P2D);
   fullScreen(P2D);
+  //size(800, 600, P2D);
 
   // First, initialize the controllers.
   //controllerA = new Controller(this, "Controller (Afterglow Gamepad for Xbox 360)");
-  controllerA = new Controller(this, "Controller (Xbox One For Windows)");
+  controllerA = new Controller(this);
   if (!SINGLE_PLAYER)
-    controllerB = new Controller(this, "Controller (Rock Candy Gamepad for Xbox 360)");
+    //controllerB = new Controller(this, "Controller (Rock Candy Gamepad for Xbox 360)");
+    controllerB = new Controller(this);
   
   switchToState(new LevelState(this));
 }

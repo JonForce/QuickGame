@@ -7,10 +7,15 @@ class LevelState extends GameState {
   SawTrap trap;
   ArrayList<Block> blocks = new ArrayList<Block>();
   ArrayList<SawTrap> traps = new ArrayList<SawTrap>();
+  
+  // Level State data
+  boolean gameOver = false;
   boolean paused = false;
 
   long lastAdd;
   Controller controllerA, controllerB;
+
+  Menu activeMenu = null;
 
   QuickGame game;
 
@@ -38,8 +43,10 @@ class LevelState extends GameState {
   }
 
   @Override
-  void update() {
+    void update() {
     if (!paused) {
+      background.update();
+
       camera.update(playerA, playerB);
       for (Block b : blocks)
         b.updatePhysics(playerA, playerB);
@@ -54,12 +61,14 @@ class LevelState extends GameState {
       playerA.update();
       if (!SINGLE_PLAYER)
         playerB.update();
+
+      for (SawTrap t : traps)
+        t.update(playerA, playerB);
     }
   }
 
   @Override
     void render() {
-
     background(150);
 
     background.render(camera);
@@ -69,51 +78,25 @@ class LevelState extends GameState {
       playerB.render(camera);
 
     for (SawTrap t : traps)
-      t.render(camera, playerA, playerB);
+      t.render(camera);
 
     for (Block b : blocks)
       b.render(camera);
 
-    if (playerA.isDead() && playerB.isDead())
-      renderDeathMenu();
+    
+    if (playerA.isDead() && playerB.isDead() && !gameOver) {
+      gameOver = true;
+      activeMenu = new DeathMenu(this, controllerA);
+    }
 
     drawFrameRate();
+    
+    if (activeMenu != null)
+      activeMenu.render();
 
-    /*
-    camera.update(playerA, playerB);
-     
-     for (Block b : blocks)
-     b.updatePhysics(playerA, playerB);
-     
-     background(150);
-     
-     background.render(camera);
-     
-     playerA.render(camera);
-     if (!SINGLE_PLAYER)
-     playerB.render(camera);
-     
-     for (SawTrap t : traps)
-     t.render(camera, playerA, playerB);
-     
-     for (Block b : blocks)
-     b.render(camera);
-     
-     if (playerA.isDead() && playerB.isDead())
-     renderDeathMenu();
-     
-     drawFrameRate();
-     
-     // This code is for dubugging purposes. It allows you to click to spawn things.
-     if (mousePressed && millis() - lastAdd > 1000) {
-     lastAdd = millis();
-     println("traps.add(new SawTrap(player, "+(playerA.x+mouseX)+", " + mouseY + "));");
-     //traps.add(new SawTrap((playerA.x+mouseX), mouseY));
-     blocks.add(new Block((playerA.x+mouseX)-width/2, mouseY, 50, 50));
-     }
-     */
-    if (controllerA.buttonStart.getValue() > 0) {
-      paused = !paused;
+    if (controllerA.buttonStart.getValue() > 0 && !gameOver && !paused) {
+      activeMenu = new PauseMenu(controllerA, this);
+      paused = true;
     }
   }
 
@@ -125,26 +108,24 @@ class LevelState extends GameState {
     new ProceduralLevel(this).generate();
   }
 
+  void resume() {
+    paused = false;
+  }
+
+  void closeMenu() {
+    activeMenu = null;
+  }
+
   void resetGame() {
-    playerA.x = width;
+    playerA.y = playerA.START_Y;
+    playerA.x = playerA.START_X;
     playerA.death = null;
     if (!SINGLE_PLAYER) {
       playerB.x = width + 50;
       playerB.death = null;
     }
-  }
-
-  void renderDeathMenu() {
-    fill(255);
-    rect(width/2 - 100, height /2 - 100, 400, 200);
-    fill(0);
-    textSize(45);
-    text("You died.", width/2, height/2);
-    textSize(30);
-    text("[Press Jump To Restart]", width/2 - 75, height/2 + 50);
-
-    if ((keysPressed.contains(' ') || controllerA.buttonA.pressed()) && millis() - playerA.deathTime > 1000)
-      resetGame();
+    gameOver = false;
+    paused = false;
   }
 
   void drawFrameRate() {

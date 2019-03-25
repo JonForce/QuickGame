@@ -17,8 +17,17 @@ class SawTrap {
     for (int i = 0; i < SPIKES; i ++)
       speeds[i] = random(1) < .5? random(-5, -8) : random(5, 8);
   }
+  
+  void update(Player ... players) {
+    r += .05;
+    
+    for (Player p : players) {
+      if (dist(p.x + p.size/2 + width/2, p.y + p.size/2, startPoint.x, startPoint.y) < SPIKE_HEIGHT && !p.isDead())
+        p.die();
+    }
+  }
 
-  void render(Camera camera, Player ... players) {
+  void render(Camera camera) {
     fill(0, 0, 0);
     float x = startPoint.x;
     float y = startPoint.y;
@@ -34,12 +43,6 @@ class SawTrap {
           SPIKE_WIDTH/2, -SPIKE_HEIGHT/2);
         popMatrix();
       }
-      r += .05;
-    }
-
-    for (Player p : players) {
-      if (dist(p.x + p.size/2 + width/2, p.y + p.size/2, x, y) < SPIKE_HEIGHT && !p.isDead())
-        p.die();
     }
   }
 }
