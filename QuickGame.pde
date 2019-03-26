@@ -13,10 +13,8 @@ void setup() {
   //size(800, 600, P2D);
 
   // First, initialize the controllers.
-  //controllerA = new Controller(this, "Controller (Afterglow Gamepad for Xbox 360)");
   controllerA = new Controller(this);
   if (!SINGLE_PLAYER)
-    //controllerB = new Controller(this, "Controller (Rock Candy Gamepad for Xbox 360)");
     controllerB = new Controller(this);
   
   switchToState(new LevelState(this));
