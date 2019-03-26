@@ -21,15 +21,12 @@ abstract class Menu {
   }
 
   void render() {
-    int totalBoxHeight =
-      200 + options.size()*(OPTION_TEXT_SIZE + 50);
-    
     fill(0);
-    rect(width/2 - BOX_WIDTH/2, height/2 - totalBoxHeight/2, BOX_WIDTH, totalBoxHeight);
+    rect(this.x(), this.y(), this.width(), this.height());
   
     int
       titleX = width/2,
-      titleY = height/2 - totalBoxHeight/2 + TITLE_TEXT_SIZE + 30;
+      titleY = height/2 - this.height()/2 + TITLE_TEXT_SIZE + 30;
     textAlign(CENTER);
     fill(255);
     textSize(TITLE_TEXT_SIZE);
@@ -63,6 +60,22 @@ abstract class Menu {
 
     if (controller.buttonA.getValue() > 0 || controller.buttonStart.getValue() > 0)
       onSelect(options.get(selectedOption));
+  }
+  
+  int width() {
+    return BOX_WIDTH;
+  }
+  
+  int height() {
+    return 200 + options.size()*(OPTION_TEXT_SIZE + 50);
+  }
+  
+  int x() {
+    return width/2 - this.width()/2;
+  }
+  
+  int y() {
+    return height/2 - this.height()/2;
   }
 
   abstract void onSelect(String option);
@@ -108,13 +121,16 @@ class PauseMenu extends Menu {
 }
 
 class DeathMenu extends Menu {
-
+  
+  final int
+    BLOOD_H_PADDING = 20;
   final String
     RESTART = "Restart", 
     EXIT_TO_MAIN_MENU = "Quit to main menu", 
     EXIT_TO_DESKTOP = "Quit to desktop";
 
   LevelState level;
+  BloodAnimation animation;
 
   DeathMenu(LevelState level, Controller controller) {
     super(controller);
@@ -123,10 +139,12 @@ class DeathMenu extends Menu {
     options.add(RESTART);
     options.add(EXIT_TO_MAIN_MENU);
     options.add(EXIT_TO_DESKTOP);
+    
+    animation = new BloodAnimation(x() + BLOOD_H_PADDING/2, this.y() + this.height(), this.width() - BLOOD_H_PADDING, 400, .25, 20);
   }
 
   @Override
-    void onSelect(String option) {
+  void onSelect(String option) {
     if (option.equals(RESTART)) {
       level.resetGame();
       level.closeMenu();
@@ -135,5 +153,11 @@ class DeathMenu extends Menu {
     } else if (option.equals(EXIT_TO_DESKTOP)) {
       exit();
     }
+  }
+  
+  @Override
+  void render() {
+    animation.render();
+    super.render();
   }
 }
