@@ -63,20 +63,23 @@ class Background {
 /** This helper class represents a speck of dust in the background. */
 class Speck implements Renderable {
 
-  float x, y, size, depth;
+  float x, y, size, depth, frequency, amplitude;
   
   Speck(float x, float y, float size) {
     this.x = x;
     this.y = y;
     this.size = size;
+    frequency = random(1000, 2000);
+    amplitude = random(5, 50);
   }
 
   void render(Camera camera) {
+    y -= 1;
     fill(0);
     // Render the dust particle. The x position is looped around the left side of the screen.
     // Depth is multiplied against the player's x position to produce a parralax affect.
     ellipse(
-      width - (x + camera.x * depth) % width, 
+      width - (x + camera.x * depth + sin(millis()/frequency)*amplitude) % width, 
       (height - (y + camera.y))%height, 
       size, size);
   }

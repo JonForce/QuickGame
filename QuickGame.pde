@@ -1,5 +1,12 @@
 static final boolean
    SINGLE_PLAYER = true;
+static enum Mode {
+  LEVEL_EDITOR,
+  LOAD_LEVEL,
+  PROCEDURAL_LEVEL
+}
+static final Mode
+  MODE = Mode.LOAD_LEVEL;
 
 /** This is a running list of the keys that are currently pressed represented by their Character. */
 static ArrayList<Character> keysPressed = new ArrayList<Character>();
@@ -16,8 +23,8 @@ void setup() {
   controllerA = new Controller(this);
   if (!SINGLE_PLAYER)
     controllerB = new Controller(this);
-  
-  switchToState(new LevelState(this));
+    
+  switchToState(new MainMenuState(this));
 }
 
 void draw() {

@@ -1,4 +1,4 @@
-import org.gamecontrolplus.gui.*; //<>// //<>//
+import org.gamecontrolplus.gui.*; //<>// //<>// //<>//
 import org.gamecontrolplus.*;
 import net.java.games.input.*;
 

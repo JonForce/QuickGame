@@ -1,6 +1,6 @@
 class SawTrap {
 
-  static final float
+  float
     SPIKE_WIDTH = 70, 
     SPIKE_HEIGHT = 70;
   final int
@@ -10,12 +10,17 @@ class SawTrap {
   float[] speeds;
   Vector startPoint = new Vector(), endPoint;
 
-  SawTrap(float x, float y) {
+  SawTrap(float x, float y, float size) {
+    this.SPIKE_WIDTH = this.SPIKE_HEIGHT = size;
     startPoint.x = x;
     startPoint.y = y;
     speeds = new float[SPIKES];
     for (int i = 0; i < SPIKES; i ++)
       speeds[i] = random(1) < .5? random(-5, -8) : random(5, 8);
+  }
+  
+  SawTrap(float x, float y) {
+    this(x, y, 79);
   }
   
   void update(Player ... players) {

@@ -113,7 +113,7 @@ class PauseMenu extends Menu {
       level.resetGame();
       level.closeMenu();
     } else if (option.equals(EXIT_TO_MAIN_MENU)) {
-      println("Exit to main menu! : )");
+      level.returnToMainMenu();
     } else if (option.equals(EXIT_TO_DESKTOP)) {
       exit();
     }
@@ -149,7 +149,7 @@ class DeathMenu extends Menu {
       level.resetGame();
       level.closeMenu();
     } else if (option.equals(EXIT_TO_MAIN_MENU)) {
-      println("Exit to main menu! : )");
+      level.returnToMainMenu();
     } else if (option.equals(EXIT_TO_DESKTOP)) {
       exit();
     }

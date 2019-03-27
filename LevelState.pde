@@ -52,12 +52,12 @@ class LevelState extends GameState {
         b.updatePhysics(playerA, playerB);
 
       // This code is for dubugging purposes. It allows you to click to spawn things.
-      if (mousePressed && millis() - lastAdd > 1000) {
-        lastAdd = millis();
-        println("traps.add(new SawTrap(player, "+(playerA.x+mouseX)+", " + mouseY + "));");
-        //traps.add(new SawTrap((playerA.x+mouseX), mouseY));
-        blocks.add(new Block((playerA.x+mouseX)-width/2, mouseY, 50, 50));
-      }
+      //if (mousePressed && millis() - lastAdd > 1000) {
+      //  lastAdd = millis();
+      //  println("traps.add(new SawTrap(player, "+(playerA.x+mouseX)+", " + mouseY + "));");
+      //  //traps.add(new SawTrap((playerA.x+mouseX), mouseY));
+      //  blocks.add(new Block((playerA.x+mouseX)-width/2, mouseY, 50, 50));
+      //}
       playerA.update();
       if (!SINGLE_PLAYER)
         playerB.update();
@@ -114,6 +114,10 @@ class LevelState extends GameState {
 
   void closeMenu() {
     activeMenu = null;
+  }
+  
+  void returnToMainMenu() {
+    game.switchToState(new MainMenuState(game));
   }
 
   void resetGame() {

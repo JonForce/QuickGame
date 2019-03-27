@@ -1,4 +1,4 @@
-class Tree implements Renderable { //<>//
+class Tree implements Renderable { //<>// //<>//
   float x, depth;
 
   ArrayList<Vector> vectors = new ArrayList<Vector>();

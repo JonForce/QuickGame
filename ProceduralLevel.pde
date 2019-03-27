@@ -6,7 +6,7 @@ class ProceduralLevel {
 
   ArrayList<Spawner> spawners = new ArrayList<Spawner>();
   LevelState level;
-  
+
   ProceduralLevel(LevelState level) {
     this.level = level;
     spawners.add(new SawHallway(level));
@@ -82,7 +82,7 @@ class SawHallway extends Spawner {
   }
 
   @Override
-  void generate(float baseX, float baseY, float maxWidth) {
+    void generate(float baseX, float baseY, float maxWidth) {
     int sawSeperation = (int)random(200, 350), saws = (int)random(1, (int) (maxWidth / sawSeperation));
     h = 200;
     w = saws * sawSeperation;
@@ -100,29 +100,33 @@ class SawHallway extends Spawner {
 }
 
 class SawRow extends Spawner {
+  final float SPIKE_WIDTH = 70;
+  
   LevelState level;
   SawRow(LevelState level) {
     this.level = level;
     canStack = false;
-    minWidth = SawTrap.SPIKE_WIDTH*2;
+    minWidth = SPIKE_WIDTH*2;
   }
 
   @Override
-  void generate(float baseX, float baseY, float maxWidth) {
+    void generate(float baseX, float baseY, float maxWidth) {
     h = 300;
-    w = random(SawTrap.SPIKE_WIDTH, min(600, maxWidth));
+    w = random(SPIKE_WIDTH, min(600, maxWidth));
 
-    int toSpawn = (int) (w/SawTrap.SPIKE_WIDTH), spawned = 0;
+    int toSpawn = (int) (w/SPIKE_WIDTH), spawned = 0;
     float x = baseX + w/2;
     while (spawned < toSpawn) {
-      level.traps.add(new SawTrap(x + width/2, baseY - SawTrap.SPIKE_HEIGHT/2));
+      level.traps.add(new SawTrap(x + width/2, baseY - SPIKE_WIDTH/2, SPIKE_WIDTH));
       spawned ++;
-      x += SawTrap.SPIKE_WIDTH;
+      x += SPIKE_WIDTH;
     }
   }
 }
 
 class SawPit extends Spawner {
+  final float SPIKE_SIZE = 70;
+  
   LevelState level;
   SawPit(LevelState level) { 
     this.level = level;
@@ -142,12 +146,12 @@ class SawPit extends Spawner {
 
     // Spawn the saws in the pit.
     float sawsLength = w - w/4;
-    int toSpawn = (int) (sawsLength/SawTrap.SPIKE_WIDTH), spawned = 0;
+    int toSpawn = (int) (sawsLength/SPIKE_SIZE), spawned = 0;
     float x = baseX + 250;
     while (spawned < toSpawn) {
-      level.traps.add(new SawTrap(x + width/2, baseY - SawTrap.SPIKE_HEIGHT/2));
+      level.traps.add(new SawTrap(x + width/2, baseY - SPIKE_SIZE/2, SPIKE_SIZE));
       spawned ++;
-      x += SawTrap.SPIKE_WIDTH;
+      x += SPIKE_SIZE;
     }
   }
 }
