@@ -1,0 +1,10 @@
+Gamepad
+XPOS	X Control	3	SLIDER	X Axis	0	1.0	0.15
+YPOS	Y Control	3	SLIDER	Y Axis	0	1.0	0.15
+XROT	X Rotation	3	SLIDER	X Rotation	0	1.0	0.15
+YROT	Y Rotation	3	SLIDER	Y Rotation	0	1.0	0.15
+BUTTON_A	Button A	1	BUTTON	Button 0	0	0.0	0.0
+BUTTON_RB	Button A	1	BUTTON	Button 5	0	0.0	0.0
+BUTTON_SELECT	Button A	1	BUTTON	Button 6	0	0.0	0.0
+BUTTON_START	Button A	1	BUTTON	Button 7	0	0.0	0.0
+TRIGGER_LEFT	Left Trigger	3	SLIDER	Z Axis	0	1.0	0.2

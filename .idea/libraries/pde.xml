@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="pde">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Desktop/Shit/processing-3.3.6/lib/pde.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
