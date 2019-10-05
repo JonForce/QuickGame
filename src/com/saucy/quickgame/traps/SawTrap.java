@@ -1,20 +1,23 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.traps;
 
+import com.saucy.quickgame.main.Camera;
+import com.saucy.quickgame.main.Player;
+import com.saucy.quickgame.math.Vector;
 import processing.core.PApplet;
 
 public class SawTrap {
 
   private PApplet applet;
 
-  float
+  public float
     SPIKE_WIDTH = 70, 
     SPIKE_HEIGHT = 70;
-  final int
+  public final int
     SPIKES = 5;
 
   float r;
   float[] speeds;
-  Vector startPoint = new Vector(), endPoint;
+  public Vector startPoint = new Vector(), endPoint;
 
   public SawTrap(PApplet applet, float x, float y, float size) {
     this.applet = applet;
@@ -26,11 +29,11 @@ public class SawTrap {
       speeds[i] = applet.random(1) < .5? applet.random(-5, -8) : applet.random(5, 8);
   }
   
-  SawTrap(PApplet applet, float x, float y) {
+  public SawTrap(PApplet applet, float x, float y) {
     this(applet, x, y, 79);
   }
   
-  public void update(Player ... players) {
+  public void update(Player... players) {
     r += .05;
     
     for (Player p : players) {

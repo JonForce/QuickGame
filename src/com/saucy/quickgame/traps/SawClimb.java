@@ -1,5 +1,7 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.traps;
 
+import com.saucy.quickgame.main.Block;
+import com.saucy.quickgame.main.LevelState;
 import processing.core.PApplet;
 
 public class SawClimb extends Spawner {
@@ -7,7 +9,7 @@ public class SawClimb extends Spawner {
     private PApplet applet;
 
     LevelState level;
-    SawClimb(PApplet applet, LevelState level) {
+    public SawClimb(PApplet applet, LevelState level) {
         this.applet = applet;
         this.level = level;
         canStack = false;
@@ -15,7 +17,7 @@ public class SawClimb extends Spawner {
     }
 
     @Override
-    void generate(float baseX, float baseY, float maxWidth) {
+    public void generate(float baseX, float baseY, float maxWidth) {
         h = 1000;
         w = 700;
         float floorHeight = 200, wallThickness = 60;

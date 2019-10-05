@@ -1,5 +1,10 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.background;
 
+import com.saucy.quickgame.art.Speck;
+import com.saucy.quickgame.art.Tree;
+import com.saucy.quickgame.main.Camera;
+import com.saucy.quickgame.main.GraphicsSettings;
+import com.saucy.quickgame.main.Renderable;
 import processing.core.PApplet;
 
 import java.util.*;

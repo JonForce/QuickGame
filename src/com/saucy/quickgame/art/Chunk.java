@@ -1,5 +1,6 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.art;
 
+import com.saucy.quickgame.main.Camera;
 import processing.core.PApplet;
 
 public class Chunk {
@@ -18,7 +19,7 @@ public class Chunk {
             speedX,
             speedY;
 
-    Chunk(PApplet applet, float x, float y, boolean blood) {
+    public Chunk(PApplet applet, float x, float y, boolean blood) {
         this.applet = applet;
         this.GRAVITY = applet.random(.3f, 1f);
         this.x = x;
@@ -28,7 +29,7 @@ public class Chunk {
         this.blood = blood;
     }
 
-    void render(Camera camera) {
+    public void render(Camera camera) {
         // Physics
         x += speedX;
         y += speedY;

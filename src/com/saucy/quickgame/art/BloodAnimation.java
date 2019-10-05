@@ -1,4 +1,4 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.art;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -19,7 +19,7 @@ public class BloodAnimation {
   float[] inkSizes;
   PGraphics graphic;
 
-  BloodAnimation(PApplet applet, float x, float y, float w, float h, float damping, int drips) {
+  public BloodAnimation(PApplet applet, float x, float y, float w, float h, float damping, int drips) {
     this.applet = applet;
     graphic = applet.createGraphics((int) w + H_PADDING*2, (int) h, applet.P2D);
     this.drips = drips;
@@ -34,7 +34,7 @@ public class BloodAnimation {
       createNewDrip(i);
   }
 
-  void render() {
+  public void render() {
     simulate(1);
     for (int i = 0; i < drips; i ++) {
       applet.image(graphic, x - H_PADDING, y);

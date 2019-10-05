@@ -1,7 +1,7 @@
 package com.saucy.quickgame.main;
 
-import com.saucy.quickgame.main.*;
-import processing.core.PApplet;
+import com.saucy.quickgame.background.Background;
+import com.saucy.quickgame.traps.SawTrap;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class LevelState extends GameState {
   Background background;
   SawTrap trap;
   public ArrayList<Block> blocks = new ArrayList<Block>();
-  ArrayList<SawTrap> traps = new ArrayList<SawTrap>();
+  public ArrayList<SawTrap> traps = new ArrayList<SawTrap>();
   
   // Level State data
   boolean gameOver = false;

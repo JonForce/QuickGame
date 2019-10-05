@@ -1,5 +1,6 @@
 package com.saucy.quickgame.main;
 
+import com.saucy.quickgame.traps.*;
 import processing.core.PApplet;
 
 import java.util.ArrayList;

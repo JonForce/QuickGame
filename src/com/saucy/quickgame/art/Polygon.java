@@ -1,14 +1,18 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.art;
 
+import com.saucy.quickgame.math.Vector;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class Polygon {
-    Vector[] vectors;
-    Polygon(Vector ... vectors) {
+
+    public Vector[] vectors;
+
+    public Polygon(Vector ... vectors) {
         this.vectors = vectors;
     }
-    void render(PGraphics g) {
+
+    public void render(PGraphics g) {
         g.fill(75);
         g.beginShape();
         for (Vector v : vectors)

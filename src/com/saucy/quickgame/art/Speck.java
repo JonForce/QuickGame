@@ -1,5 +1,7 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.art;
 
+import com.saucy.quickgame.main.Camera;
+import com.saucy.quickgame.main.Renderable;
 import processing.core.PApplet;
 
 /** This helper class represents a speck of dust in the background. */
@@ -7,9 +9,9 @@ public class Speck implements Renderable {
 
     private PApplet applet;
 
-    float x, y, size, depth, frequency, amplitude;
+    public float x, y, size, depth, frequency, amplitude;
 
-    Speck(PApplet applet, float x, float y, float size) {
+    public Speck(PApplet applet, float x, float y, float size) {
         this.applet = applet;
         this.x = x;
         this.y = y;

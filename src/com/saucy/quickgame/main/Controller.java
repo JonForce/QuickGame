@@ -10,18 +10,18 @@ public class Controller {
    do not modify it extenally. */
   static int CONTROLLERS_CONNECTED = 0;
 
-  QuickGame game;
-  ControlIO control;
-  Configuration config;
-  ControlDevice gpad;
-  ControlSlider sliderAX;
-  ControlSlider sliderAY;
-  ControlSlider sliderBX;
-  ControlSlider sliderBY;
-  ControlSlider leftTrigger;
-  ControlButton buttonA, buttonStart;
+  private QuickGame game;
+  private ControlIO control;
+  private Configuration config;
+  private ControlDevice gpad;
+  public ControlSlider sliderAX;
+  public ControlSlider sliderAY;
+  public ControlSlider sliderBX;
+  public ControlSlider sliderBY;
+  public ControlSlider leftTrigger;
+  public ControlButton buttonA, buttonStart;
 
-  Controller(QuickGame game) {
+  public Controller(QuickGame game) {
     this.game = game;
     // Initialise the ControlIO
     control = ControlIO.getInstance(game);

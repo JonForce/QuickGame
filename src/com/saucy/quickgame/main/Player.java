@@ -1,7 +1,8 @@
 package com.saucy.quickgame.main;
 
-import org.gamecontrolplus.gui.*; //<>// //<>// //<>//
-import org.gamecontrolplus.*;
+import com.saucy.quickgame.art.DeathAnimation;
+import com.saucy.quickgame.weapon.Gun;
+import com.saucy.quickgame.weapon.Pistol;
 import processing.core.PApplet;
 
 public class Player {

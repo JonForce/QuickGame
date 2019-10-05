@@ -1,5 +1,6 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.traps;
 
+import com.saucy.quickgame.main.LevelState;
 import processing.core.PApplet;
 
 public class SawRow extends Spawner {
@@ -8,7 +9,7 @@ public class SawRow extends Spawner {
     private PApplet applet;
 
     LevelState level;
-    SawRow(PApplet applet, LevelState level) {
+    public SawRow(PApplet applet, LevelState level) {
         this.applet = applet;
         this.level = level;
         canStack = false;
@@ -16,7 +17,7 @@ public class SawRow extends Spawner {
     }
 
     @Override
-    void generate(float baseX, float baseY, float maxWidth) {
+    public void generate(float baseX, float baseY, float maxWidth) {
         h = 300;
         w = applet.random(SPIKE_WIDTH, applet.min(600, maxWidth));
 

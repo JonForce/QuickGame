@@ -1,5 +1,6 @@
 package com.saucy.quickgame.main;
 
+import com.saucy.quickgame.art.BloodAnimation;
 import processing.core.PApplet;
 
 public class DeathMenu extends Menu {

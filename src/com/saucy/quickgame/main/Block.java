@@ -1,5 +1,6 @@
 package com.saucy.quickgame.main;
 
+import com.saucy.quickgame.math.Rectangle;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
@@ -20,10 +21,8 @@ public class Block {
     collidingDown = new ArrayList<Player>(), 
     collidingRight = new ArrayList<Player>(), 
     collidingLeft = new ArrayList<Player>();
-    
-  boolean debug = false;
 
-  Block(PApplet applet, float x, float y, float w, float h) {
+  public Block(PApplet applet, float x, float y, float w, float h) {
     this.applet = applet;
     this.x = x;
     this.y = y;
@@ -43,6 +42,8 @@ public class Block {
     
       // We detect collision by taking the intersection of these two rectangles.
       Rectangle intercept = self.intercept(playerRect);
+
+      applet.println(collidingDown.size() + " :- " + collidingUp.size());
     
       // If there was no collision, remove that player from any collision lists.
       if (intercept.w == 0 && intercept.y == 0) {
@@ -58,18 +59,20 @@ public class Block {
         
         // If the intercept's smaller vertically,
         if (intercept.h <= intercept.w) {
-          if (player.y < y + h/2) {
-            collidingDown.add(player);
-            player.y -= intercept.h;
-          } else if (player.y > y + h/2) {
-            collidingUp.add(player);
-            player.y += intercept.h;
-          }
+        	//applet.println("Moving up and down");
+			if (player.y < y + h / 2) {
+			  collidingDown.add(player);
+			  player.y -= intercept.h;
+			} else if (player.y > y + h / 2) {
+			  collidingUp.add(player);
+			  player.y += intercept.h;
+			}
           collidingLeft.remove(player);
           collidingRight.remove(player);
 
           player.speedY = 0;
         } else {
+			//applet.println("Moving left and right");
           if (player.x < x + w/2) {
             player.x -= intercept.w;
             collidingRight.add(player);
@@ -89,5 +92,3 @@ public class Block {
     applet.rect(x - camera.x + applet.width/2, y - camera.y, w, h);
   }
 }
-
-

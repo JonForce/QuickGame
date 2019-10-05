@@ -1,5 +1,8 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.art;
 
+import com.saucy.quickgame.art.Chunk;
+import com.saucy.quickgame.main.Camera;
+import com.saucy.quickgame.main.Player;
 import processing.core.PApplet;
 
 public class DeathAnimation {
@@ -14,7 +17,7 @@ public class DeathAnimation {
   float x, y;
   Chunk[] chunks;
 
-  DeathAnimation(PApplet applet, Player p, float x, float y) {
+  public DeathAnimation(PApplet applet, Player p, float x, float y) {
     this.applet = applet;
     this.player = p;
     this.x = x;
@@ -25,7 +28,7 @@ public class DeathAnimation {
     }
   }
 
-  void render(Camera camera) {
+  public void render(Camera camera) {
     for (int i = 0; i < CHUNKS; i ++)
       chunks[i].render(camera);
   }

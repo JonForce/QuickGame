@@ -1,5 +1,8 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.weapon;
 
+import com.saucy.quickgame.main.Camera;
+import com.saucy.quickgame.main.Controller;
+import com.saucy.quickgame.main.Player;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -10,7 +13,7 @@ public class Pistol extends Gun {
     PImage sprite, flipped;
     float aimX, aimY;
 
-    Pistol(PApplet applet, Player p, Controller c) {
+    public Pistol(PApplet applet, Player p, Controller c) {
         super(p, c);
         this.applet = applet;
         sprite = applet.loadImage("Pistol.png");
@@ -18,13 +21,13 @@ public class Pistol extends Gun {
     }
 
     @Override
-    void update() {
+    public void update() {
         aimX = controller.sliderBX.getValue();
         aimY = controller.sliderBY.getValue();
     }
 
     @Override
-    void render(Camera camera) {
+    public void render(Camera camera) {
         applet.pushMatrix();
 
         applet.translate(

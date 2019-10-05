@@ -7,7 +7,7 @@ public class Camera {
   private PApplet applet;
 
   final float FOLLOW_SPEED = .2f;
-  float x, y;
+  public float x, y;
 
   public Camera(PApplet applet) {
     this.applet = applet;

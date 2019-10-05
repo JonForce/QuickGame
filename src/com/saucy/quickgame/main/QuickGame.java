@@ -60,7 +60,7 @@ public class QuickGame extends PApplet {
 
   /**
    * This will shift the game into the newState. It will call all the appropriate
-   * events on both the new and old states.
+   * events on both the new and old art.
    */
   public void switchToState(GameState newState) {
     if (state != null)

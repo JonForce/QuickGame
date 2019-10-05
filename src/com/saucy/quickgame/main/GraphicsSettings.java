@@ -13,9 +13,9 @@ public class GraphicsSettings {
     JSON_BG_OBJECTS = "bgObjects", 
     JSON_EFFECTS = "effects";
 
-  float bgParticles = 1.0f;
-  float bgObjects = 1.0f;
-  float effects = 1.0f;
+  public float bgParticles = 1.0f;
+  public float bgObjects = 1.0f;
+  public float effects = 1.0f;
 
   GraphicsSettings(PApplet applet) {
     this.applet = applet;

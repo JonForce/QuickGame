@@ -1,5 +1,7 @@
 package com.saucy.quickgame.main;
 
+import com.saucy.quickgame.math.Rectangle;
+import com.saucy.quickgame.traps.SawTrap;
 import processing.core.PApplet;
 
 import java.io.*;
@@ -204,9 +206,9 @@ public class LevelEditor extends LevelState {
   float spawnY(int type) {
     float y;
     if (type == BLOCK)
-      y = game.mouseY;
+      y = game.mouseY + camera.y;
     else if (type == SAW)
-      y = game.mouseY + h/2;
+      y = game.mouseY + h/2 + camera.y;
     else
       throw new RuntimeException("Type of object unknown");
     return y - (y % SNAP_GRID_SIZE);

@@ -1,8 +1,9 @@
-package com.saucy.quickgame.main;
+package com.saucy.quickgame.art;
 
+import com.saucy.quickgame.main.*;
+import com.saucy.quickgame.math.Vector;
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import com.saucy.quickgame.main.Vector;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class Tree implements Renderable {
   ArrayList<Polygon> polygons = new ArrayList<Polygon>();
   PGraphics graphic;
 
-  Tree(PApplet applet, float x, float depth) {
+  public Tree(PApplet applet, float x, float depth) {
     this.applet = applet;
     this.x = x;
     this.depth = depth;
